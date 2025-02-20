@@ -1,10 +1,26 @@
 def cargar_buffer(entrada, inicio, tamano_buffer):
+    """
+    Carga un segmento de la entrada en el buffer.
+    Si el buffer no se llena completamente y no contiene "eof", se añade "eof" como centinela.
+    """
     buffer = entrada[inicio:inicio + tamano_buffer]
     if len(buffer) < tamano_buffer and "eof" not in buffer:
-        buffer.append("eof")  # Añadir el carácter centinela si el buffer no se llena completamente
+        buffer.append("eof")  
     return buffer
 
+def procesar_lexema(lexema):
+    """
+    Procesa y muestra el lexema si no está vacío.
+    """
+    if lexema:
+        print(f"Lexema procesado: {lexema}")
+        return "" 
+    return lexema
+
 def procesar_buffer(entrada, tamano_buffer):
+    """
+    Procesa la entrada en bloques de tamaño `tamano_buffer` y extrae lexemas.
+    """
     inicio = 0
     buffer = cargar_buffer(entrada, inicio, tamano_buffer)
     lexema = ""
@@ -13,28 +29,28 @@ def procesar_buffer(entrada, tamano_buffer):
         avance = 0
         
         while avance < len(buffer):
-            if buffer[avance] == " " or buffer[avance] == "eof":
-                if lexema:  # Si hay un lexema acumulado, imprimirlo
-                    print(f"Lexema procesado: {lexema}")
-                    lexema = ""
+            caracter = buffer[avance]
+            
+            if caracter == " " or caracter == "eof":
+                lexema = procesar_lexema(lexema)
             else:
-                lexema += buffer[avance]
+                lexema += caracter
+                
             avance += 1
         
         if "eof" in buffer:
-            break  # Salir del bucle al encontrar el centinela
+            break  
         
-        # Avanzar al siguiente segmento del buffer
+      
         inicio += tamano_buffer
         buffer = cargar_buffer(entrada, inicio, tamano_buffer)
     
-    # Imprimir el último lexema si quedó algo en el buffer
-    if lexema and lexema != "eof":
-        print(f"Lexema procesado: {lexema}")
+  
+    lexema = procesar_lexema(lexema)
 
-# Entrada de ejemplo
+
 txt = "Esto es un ejemplo de entrada con eof"
-entrada = list(txt)  # Convertir la entrada en una lista de caracteres
-tamano_buffer = 10  # Tamaño del búfer definido en el problema
+entrada = list(txt) 
+tamano_buffer = 10  
 
 procesar_buffer(entrada, tamano_buffer)
