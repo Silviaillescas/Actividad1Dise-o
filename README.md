@@ -4,6 +4,11 @@ Este proyecto implementa un simulador de búfer de entrada en Python, utilizando
 
 ---
 
+#Link del video:
+```
+https://youtu.be/EehAV1vUIm4?si=xBXDKFkLpXKuSALf
+```
+
 ## 🛠️ ¿Cómo funciona?
 
 ### 1. **Carga del Búfer**
